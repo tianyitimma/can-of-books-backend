@@ -13,4 +13,4 @@ const userSchema = new mongoose.Schema({
   books: [bookSchema]
 })
 
-module.export = mongoose.model('users', userSchema);
+module.exports = mongoose.model('users', userSchema);
