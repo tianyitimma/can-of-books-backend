@@ -5,6 +5,8 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
+const mongoose = require('mongoose');
+const UserBooks = require('./models/User.js');
 
 const app = express();
 app.use(cors());
@@ -40,3 +42,41 @@ app.get('/test', (req, res) => {
 })
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
+const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true }
+
+// connecting mongoose
+mongoose.connect('mongodb://localhost:27017/books', mongooseOptions);
+
+// creating user object and add books to database
+
+let tim = new UserBooks({
+  email: 'tim.ma0118@gmail.com',
+  books:[
+    {
+      name: 'Harry Potter',
+      description: 'Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling',
+      status: 'Finished reading it'
+    },
+    {
+      name: 'The Lord of the Rings',
+      description: 'The Lord of the Rings is an epic[1] high fantasy novel[a] by the English author and scholar J. R. R. Tolkien',
+      status: 'Finished reading it'
+    },
+    {
+      name: 'The Three-Body Problem',
+      description: 'The Three-Body Problem is a science fiction novel by the Chinese writer Liu Cixin',
+      status: 'Wanted to read'
+    }
+  ]
+});
+tim.save();
+
+app.get('/books', getBooks);
+
+function getBooks(req, res){
+  UserBooks.find({})
+    .then(books => {
+      res.json(books);
+    })
+}
