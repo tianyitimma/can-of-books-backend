@@ -11,7 +11,7 @@ const UserBooks = require('./models/User.js');
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 3001;
+
 const client = jwksClient({
   jwksUri: 'https://tianyi.us.auth0.com/.well-known/jwks.json',
 });
