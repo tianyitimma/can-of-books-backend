@@ -80,3 +80,13 @@ function getBooks(req, res){
       res.json(books);
     })
 }
+
+app.post('/books', createBooks);
+
+function createBooks(req, res) {
+  let user = new UserBooks(req.body);
+  user.save()
+    .then(user => {
+      res.json(user);
+    })
+}
