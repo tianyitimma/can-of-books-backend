@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 app.use('*', (req, res) => {
-  res.status(404),send('rout not found');
+  res.status(404).send('rout not found');
 })
 
 app.get('/books', Book.show);
